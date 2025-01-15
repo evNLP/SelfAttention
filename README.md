@@ -36,6 +36,74 @@ El Transformer implementado consta de los siguientes componentes principales:
 
 El modelo es altamente modular y permite ajustar parámetros como el número de cabezas de atención, dimensiones ocultas y profundidad del encoder/decoder.
 
+## Cómo Usar
+
+Para ejecutar el proyecto, siga estos pasos:
+
+- Primero, clone el repositorio:
+
+  ```bash
+  git clone <URL>
+   ```
+
+- Luego, importe la clase del modelo:
+
+  ```python
+  from transformer import Transformer
+  ```
+
+- Cree una instancia del modelo con los parámetros deseados:
+
+  ```python
+  VOCAB_SIZE = 13
+  HIDDEN_DIM = 13
+  NUM_HEADS = 2
+  ENC_DEPTH = 4
+  DEC_DEPTH = 4
+
+  transformer = Transformer(
+    vocab_dim=VOCAB_SIZE, 
+    hidden_dim=HIDDEN_DIM, 
+    num_heads=NUM_HEADS, 
+    enc_depth=ENC_DEPTH,
+    dec_depth=DEC_DEPTH
+  ).to(device)
+   ```
+
+- Defina un DataLoader con sus datos de entrenamiento
+
+- Entrene el modelo con sus datos y parámetros de entrenamiento:
+
+   ```python
+   criterion = nn.CrossEntropyLoss()
+   optimizer = optim.Adam(transformer.parameters(), lr=LEARNING_RATE)
+
+   for epoch in range(EPOCHS):
+      transformer.train()
+      epoch_loss = 0
+
+      for batch in tqdm(dataloader, desc=f"Epoch {epoch+1}/{EPOCHS}"):
+         batch = batch.to(device)
+         inputs = batch[:, :8, :]
+         targets = batch[:, 8:, :]
+
+         outputs = transformer(inputs.float(), targets.float(), teacher_forcing_ratio=0.5)
+
+         outputs = outputs.reshape(-1, VOCAB_SIZE)
+         targets = torch.argmax(targets, dim=-1).reshape(-1)
+         loss = criterion(outputs, targets)
+
+         optimizer.zero_grad()
+         loss.backward()
+         optimizer.step()
+
+         epoch_loss += loss.item()
+
+      print(f"Epoch {epoch+1}/{EPOCHS}, Loss: {epoch_loss / len(dataloader):.4f}")
+
+   torch.save(transformer.state_dict(), "transformer_model.pth")
+   print("Modelo entrenado y guardado en transformer_model.pth")
+   ```
 <br>
 
 ## Prueba de la Atención
