@@ -1,5 +1,7 @@
 # Implementación del Transformer con PyTorch
 
+![alt text](images/intro.png)
+
 ## Introducción
 
 Este proyecto presenta la implementación desde cero de un modelo **Transformer** en PyTorch. El Transformer, introducido en el artículo "Attention is All You Need", es una arquitectura clave en el procesamiento de lenguaje natural (NLP) y otras tareas relacionadas con secuencias, como la traducción automática y la generación de texto. En este proyecto, el modelo se aplica a dos problemas específicos:
