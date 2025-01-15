@@ -50,8 +50,6 @@ class CrossAttention(nn.Module):
 
         scores = torch.bmm(xq, xk.transpose(1, 2))
         scores = scores / (self.hidden_dim ** 0.5)
-        #mask = self._mask(scores).to(x1.device)
-        #scores = scores + mask
 
         scores = self.softmax(scores)
         attention = torch.bmm(scores, xv)
