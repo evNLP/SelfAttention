@@ -1,4 +1,4 @@
-# Implementación del Transformer con PyTorch
+# Transformer desde Cero: Implementación completa con Pytorch
 
 ![alt text](images/intro.png)
 
