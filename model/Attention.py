@@ -54,13 +54,6 @@ class CrossAttention(nn.Module):
         scores = self.softmax(scores)
         attention = torch.bmm(scores, xv)
         return scores, attention
-
-    def _mask(self, x):
-        mask = torch.tril(x[0,:,:], diagonal=0)
-        mask[mask == 0] = float('-inf')
-        mask[mask == 1] = 0
-        mask = mask.repeat(x.size(0), 1, 1)
-        return mask
     
 
 class AttentionHead(nn.Module):
